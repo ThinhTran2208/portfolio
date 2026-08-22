@@ -2,6 +2,7 @@ import SiteShell from "@/components/SiteShell";
 import SectionHeading from "@/components/SectionHeading";
 import ProjectCard from "@/components/ProjectCard";
 import Reveal from "@/components/Reveal";
+import { projects } from "@/data/projects";
 
 export default function WorksPage() {
   return (
@@ -19,11 +20,14 @@ export default function WorksPage() {
         <section className="contentSection firstSection">
           <SectionHeading title="Project" />
           <div className="projectGrid singleCardGrid">
-            <ProjectCard
-              title="AI Fashion Assistant"
-              description="A visual AI experiment for outfit understanding and recommendation."
-              stack="Python · PyTorch · CLIP"
-            />
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.title}
+                title={project.title}
+                description={project.description}
+                stack={project.stack}
+              />
+            ))}
           </div>
         </section>
       </Reveal>

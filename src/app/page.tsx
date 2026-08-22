@@ -4,14 +4,13 @@ import SiteShell from "@/components/SiteShell";
 import SectionHeading from "@/components/SectionHeading";
 import Reveal from "@/components/Reveal";
 import ProjectCard from "@/components/ProjectCard";
-
-const project = {
-  title: "AI Fashion Assistant",
-  desc: "An experimental AI system for understanding outfits and recommending compatible fashion items.",
-  stack: "Python · PyTorch · Computer Vision",
-};
+import { projects } from "@/data/projects";
+import { newsEntries } from "@/data/news";
 
 export default function Home() {
+  const highlightedProject = projects[0];
+  const recentNews = newsEntries.slice(0, 2);
+
   return (
     <SiteShell>
       <Reveal>
@@ -51,7 +50,7 @@ export default function Home() {
       <Reveal delay={80}>
         <section className="profile minimalProfile">
           <div className="profileCopy">
-            <h1>Trần Tấn Thịnh</h1>
+            <h1>Tấn Thịnh</h1>
             <p className="lead">
               Computer Science Student · AI · Machine Learning · Computer Vision
             </p>
@@ -77,56 +76,51 @@ export default function Home() {
         </section>
       </Reveal>
 
-      <Reveal delay={80}>
-        <section className="contentSection homeWorksSection">
-          <SectionHeading
-            title="Selected Project"
-            copy=""
-          />
-          <div className="projectGrid singleCardGrid">
-            <ProjectCard
-              title={project.title}
-              description={project.desc}
-              stack={project.stack}
+      {highlightedProject && (
+        <Reveal delay={80}>
+          <section className="contentSection homeWorksSection">
+            <SectionHeading
+              title="Selected Project"
+              copy="My highlighted projects."
             />
-          </div>
-          <Link className="textLink" href="/works">
-            <span>View work</span>
-            <b>↗</b>
-          </Link>
-        </section>
-      </Reveal>
+            <div className="projectGrid singleCardGrid">
+              <ProjectCard
+                title={highlightedProject.title}
+                description={highlightedProject.description}
+                stack={highlightedProject.stack}
+              />
+            </div>
+            <Link className="textLink" href="/works">
+              <span>View work</span>
+              <b>↗</b>
+            </Link>
+          </section>
+        </Reveal>
+      )}
 
       <Reveal delay={80}>
         <section className="contentSection homeTimelineSection">
           <SectionHeading
             title="Timeline"
-            copy="Recent updates from News."
+            copy="My recent updates from News."
           />
+
           <div className="timeline">
             <div className="timelineTrack" />
-            <div className="timelineItem">
-              <div className="timelineYear">08/2026</div>
-              <div className="timelineNode" />
-              <div className="timelineContent">
-                <strong>Outfit Style Evaluation and Recommendation</strong>
-                <p>
-                  Started the project “Outfit Style Evaluation and Recommendation Using
-                  CLIP and Vision LLMs on FastAPI Web Application”.
-                </p>
+            {recentNews.map((entry) => (
+              <div className="timelineItem" key={entry.period}>
+                <div className="timelineYear">
+                  {entry.period.split(" — ")[0].slice(3)}
+                </div>
+                <div className="timelineNode" />
+                <div className="timelineContent">
+                  <strong>{entry.title}</strong>
+                  {entry.details.map((detail) => (
+                    <p key={detail}>{detail}</p>
+                  ))}
+                </div>
               </div>
-            </div>
-
-            <div className="timelineItem">
-              <div className="timelineYear">07/2026</div>
-              <div className="timelineNode" />
-              <div className="timelineContent">
-                <strong>Machine Learning course</strong>
-                <p>
-                  Joined the Machine Learning course at HCMUT EE Machine Learning & IoT Lab.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
         </section>
       </Reveal>
