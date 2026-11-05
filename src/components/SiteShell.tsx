@@ -1,21 +1,16 @@
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import MouseGlow from "./MouseGlow";
 
-export default function SiteShell({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function SiteShell({ children }: { children: React.ReactNode }) {
   return (
-    <div className="siteShell">
-      <div className="gridBackdrop" />
-      <div className="scanlineBackdrop" />
-      <div className="ambient ambientOne" />
-      <div className="ambient ambientTwo" />
-      <MouseGlow />
+    <div className="site-shell">
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
       <Navbar />
-      <main className="pageWrap">{children}</main>
+      <main id="main" tabIndex={-1}>
+        {children}
+      </main>
       <Footer />
     </div>
   );

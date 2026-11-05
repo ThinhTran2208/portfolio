@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Tran Tan Thinh — Portfolio
 
-## Getting Started
+A content-focused Next.js portfolio, with a personal introduction, dated journey,
+selected projects, academic records, writing, and contact links. The design takes
+inspiration from [Andrej Karpathy's site](https://karpathy.ai/).
 
-First, run the development server:
+## Local development
 
-```bash
+```sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Checks
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```sh
+npm run lint
+npm test
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The focused tests verify the original README Git blob hash, Markdown anchors and
+tables, relative GitHub links, public snapshot images, and rejection of raw HTML
+and script URLs.
 
-## Learn More
+## Edit personal content
 
-To learn more about Next.js, take a look at the following resources:
+- `src/data/profile.ts`: name, email, portrait, social links, and optional real CV.
+- `src/data/news.ts`: education and learning milestones. Dates are recorded facts;
+  their end dates do not determine completion status.
+- `src/data/projects.ts`: projects in display order, technology lists, actual
+  repository links, and project notes. Each slug gets a same-tab detail route.
+- `src/data/academic.ts`: verified publications and awards. Publication records
+  include authors, venue, year, explicit publication status, and optional links.
+- `src/data/writing.ts`: articles and notes. Only `status: "published"` appears
+  publicly. The old sample article is retained as `placeholder`, without fake views.
+- `src/data/personal.ts`: real experiments, notebooks, demos, and personal activities.
+  Experiments and Beyond Code stay hidden while their arrays are empty.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The introduction uses the existing portrait at `public/01.jpg`. The existing
+group photograph at `public/02.jpg` is preserved without assigning identities
+or claiming a specific event. No CV, publication, award, or hobby is fabricated.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Routes
 
-## Deploy on Vercel
+- `/`: the complete portfolio, with section anchors.
+- `/works`, `/posts`, `/news`: retained project, writing, and journey archives.
+- `/projects/autonomous-ml-toolkit`: original README, public local images, and
+  separate GitHub link.
+- `/projects/ai-fashion-assistant`: notes based on existing portfolio content.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Light mode is the default. The color-theme button preserves an explicit choice in
+browser storage; both themes use the same layout. Skip navigation, visible keyboard
+focus, and keyboard-scrollable code/table regions support keyboard use.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## README snapshot
+
+The original private-repository README is saved verbatim in
+`src/content/projects/autonomous-ml-toolkit/README.md`. Its source repository,
+branch, capture date, original Git blob SHA, and local image mapping are recorded
+in the adjacent `snapshot.json`. The initial snapshot was retrieved through the
+authenticated GitHub connector on 2026-11-05.
+
+Images are stored under `public/projects/autonomous-ml-toolkit/` and served from
+this site. The browser and production build never authenticate to GitHub or fetch
+the private README. The complete README includes the source's AI-assistance
+disclosure and its limits on interpreting toy-dataset scores.
+
+Relative document/source links resolve to the recorded GitHub branch. Those
+external repository links still require GitHub access while the repository is
+private. README headings use GitHub-style IDs and in-document anchors remain local.
+Raw HTML is skipped; Markdown is parsed as content and never executed as MDX.
+
+### Refresh from a local repository checkout
+
+First update your authenticated local checkout of autonomous-ml-toolkit using
+your normal Git workflow. Then, from this portfolio:
+
+```powershell
+npm run sync:readme -- --source "C:/path/to/autonomous-ml-toolkit" --ref main
+npm test
+npm run lint
+npm run build
+```
+
+The command reads README.md and referenced Markdown images from one Git revision;
+it does not change either repository's branches, commits, visibility, or remotes.
+It saves image bytes locally and updates the manifest, capture date, and blob SHA.
+All source reads finish before the current snapshot is replaced. Existing assets
+are retained to avoid breaking old links. No access token is required in this
+portfolio; use your already authenticated source checkout.
+
+The updater supports inline and reference-style Markdown images tracked in the
+source repository. If a future README uses remote images, it stops with an
+explanation; save those images into the source repository before refreshing.
+After any update, review the diff and the detail page before publishing.

@@ -1,42 +1,28 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import ThemeToggle from "./ThemeToggle";
 
 const links = [
-  { href: "/works", label: "Works" },
-  { href: "/posts", label: "Posts" },
-  { href: "/news", label: "News" },
+  { href: "/#journey", label: "Journey" },
+  { href: "/#projects", label: "Projects" },
+  { href: "/#academic", label: "Academic" },
+  { href: "/#writing", label: "Writing" },
+  { href: "/#contact", label: "Contact" },
 ];
 
 export default function Navbar() {
-  const pathname = usePathname();
-
   return (
-    <header className="siteHeader greenHeader">
-      <div className="siteHeaderInner minimalHeader">
-        <Link href="/" className="headerName" aria-label="Home">
-          Tran Tan Thinh
-        </Link>
-
-        <nav className="navLinks decoratedNav" aria-label="Main navigation">
-          {links.map((link) => {
-            const active = pathname === link.href;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={active ? "navLink active" : "navLink"}
-              >
-                <span>{link.label}</span>
-              </Link>
-            );
-          })}
-        </nav>
-
-        <ThemeToggle />
-      </div>
+    <header className="site-header">
+      <Link href="/" className="wordmark">
+        Tấn Thịnh<span className="home-label"> / home</span>
+      </Link>
+      <nav aria-label="Main navigation">
+        {links.map((link) => (
+          <Link key={link.href} href={link.href}>
+            {link.label}
+          </Link>
+        ))}
+      </nav>
+      <ThemeToggle />
     </header>
   );
 }
