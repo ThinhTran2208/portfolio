@@ -35,10 +35,7 @@ export default function Home() {
           <p className="native-name" lang="vi">
             {profile.nativeName}
           </p>
-          <p className="intro-copy">
-            I&apos;m a Computer Science student at HCMUT, interested in AI,
-            Machine Learning, and Computer Vision.
-          </p>
+          <p className="intro-copy">{profile.description}</p>
           <ContactLinks />
         </div>
       </section>

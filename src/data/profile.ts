@@ -2,7 +2,7 @@ export const profile = {
   name: "Tran Tan Thinh",
   nativeName: "Tấn Thịnh",
   description:
-    "Computer Science student at HCMUT, interested in AI, Machine Learning, and Computer Vision.",
+    "I'm a Computer Science student at HCMUT, interested in AI, Machine Learning, and Computer Vision 👾🌾🔥️🏀.",
   email: "abcthinh2208@gmail.com",
   portrait: "/01.jpg",
   links: [

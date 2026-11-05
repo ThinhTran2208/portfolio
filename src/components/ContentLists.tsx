@@ -27,11 +27,25 @@ export function JourneyList() {
   return (
     <ol className="journey-list">
       {journeyEntries.map((entry) => (
-        <li className="dated-row" key={entry.startDate + entry.title}>
-          <div className="date-label" title={entry.period}>
+        <li
+          className={"dated-row journey-row" + (entry.image ? " has-logo" : "")}
+          key={entry.startDate + entry.title}
+        >
+          <div className="date-label journey-date" title={entry.period}>
             {entry.dateLabel}
           </div>
-          <div>
+          {entry.image && (
+            <div className="journey-logo">
+              <Image
+                src={entry.image.src}
+                alt={entry.image.alt}
+                width={64}
+                height={64}
+                sizes="(max-width: 600px) 48px, 64px"
+              />
+            </div>
+          )}
+          <div className="journey-content">
             <h3>
               {entry.href ? (
                 <Link href={entry.href}>{entry.title}</Link>
