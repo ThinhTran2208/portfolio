@@ -3,17 +3,29 @@ export type NewsEntry = {
   dateLabel: string;
   period: string;
   title: string;
+  href?: string;
   details: string[];
 };
 
 export const newsEntries: NewsEntry[] = [
   {
+    startDate: "2026-11-05",
+    dateLabel: "Nov 2026",
+    period: "November 2026",
+    title: "autonomous-ml-toolkit",
+    href: "/projects/autonomous-ml-toolkit",
+    details: [
+      "A YAML-driven toolkit for tabular classification and regression experiments, with scikit-learn pipelines, training-only cross-validation, MLflow tracking, and Markdown reports.",
+    ],
+  },
+  {
     startDate: "2026-08-01",
     dateLabel: "Aug – Sep 2026",
     period: "01/08/2026 — 01/09/2026",
-    title: "Outfit Style Evaluation and Recommendation",
+    title: "outfit-compatibility-system",
+    href: "/projects/ai-fashion-assistant",
     details: [
-      "Started the project “Outfit Style Evaluation and Recommendation Using CLIP and Vision LLMs on FastAPI Web Application”.",
+      "Started the outfit-compatibility-system project.",
     ],
   },
   {

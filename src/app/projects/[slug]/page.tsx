@@ -5,7 +5,6 @@ import { notFound } from "next/navigation";
 import SiteShell from "@/components/SiteShell";
 import Readme from "@/components/Readme";
 import { projects } from "@/data/projects";
-import snapshot from "@/content/projects/autonomous-ml-toolkit/snapshot.json";
 
 export function generateStaticParams() {
   return projects.map((project) => ({ slug: project.slug }));
@@ -32,6 +31,7 @@ export default async function ProjectPage({
   const { slug } = await params;
   const project = projects.find((item) => item.slug === slug);
   if (!project) notFound();
+  const snapshot = project.readme;
 
   const content = project.readme
     ? await readFile(
@@ -67,23 +67,35 @@ export default async function ProjectPage({
           </a>
         )}
       </header>
-      {project.notes && (
-        <div className="project-notes">
-          {project.notes.map((note) => (
-            <p key={note}>{note}</p>
-          ))}
-        </div>
-      )}
-      {content && (
+      {content && snapshot && (
         <>
           <div className="readme-meta">
             <span>
-              Repository README · Snapshot from {snapshot.branch} ·{" "}
-              {snapshot.capturedAt}
+              {snapshot.sourceLanguage === "vi"
+                ? "English translation · Source snapshot from "
+                : "Repository README · Snapshot from "}
+              {snapshot.branch} · {snapshot.capturedAt}
             </span>
-            <span>Repository links require GitHub access.</span>
+            {snapshot.sourceLanguage === "vi" ? (
+              <a
+                href={
+                  "https://github.com/" +
+                  snapshot.repository +
+                  "/blob/" +
+                  snapshot.branch +
+                  "/" +
+                  snapshot.readmePath
+                }
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Original README (Vietnamese) ↗
+              </a>
+            ) : snapshot.isPrivate ? (
+              <span>Repository links require GitHub access.</span>
+            ) : null}
           </div>
-          <Readme content={content} />
+          <Readme content={content} snapshot={snapshot} />
         </>
       )}
     </SiteShell>

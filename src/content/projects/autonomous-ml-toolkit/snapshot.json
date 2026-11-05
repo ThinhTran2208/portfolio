@@ -1,6 +1,7 @@
 {
   "repository": "ThinhTran2208/autonomous-ml-toolkit",
   "branch": "main",
+  "isPrivate": true,
   "readmePath": "README.md",
   "readmeSha": "03f993090f01428aeb2af563d267d7e548d75193",
   "capturedAt": "2026-11-05",

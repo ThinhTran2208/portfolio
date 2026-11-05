@@ -100,6 +100,7 @@ try {
     JSON.stringify(
       {
         repository,
+        isPrivate: true,
         branch: ref,
         readmePath: "README.md",
         readmeSha,

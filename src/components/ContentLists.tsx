@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import { journeyEntries } from "@/data/news";
 import { publishedWriting } from "@/data/writing";
 import { publications, awards } from "@/data/academic";
@@ -26,12 +27,18 @@ export function JourneyList() {
   return (
     <ol className="journey-list">
       {journeyEntries.map((entry) => (
-        <li className="dated-row" key={entry.startDate}>
+        <li className="dated-row" key={entry.startDate + entry.title}>
           <div className="date-label" title={entry.period}>
             {entry.dateLabel}
           </div>
           <div>
-            <h3>{entry.title}</h3>
+            <h3>
+              {entry.href ? (
+                <Link href={entry.href}>{entry.title}</Link>
+              ) : (
+                entry.title
+              )}
+            </h3>
             {entry.details.map((detail) => (
               <p key={detail}>{detail}</p>
             ))}

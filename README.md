@@ -1,7 +1,7 @@
 # Tran Tan Thinh — Portfolio
 
 A content-focused Next.js portfolio, with a personal introduction, dated journey,
-selected projects, academic records, writing, and contact links. The design takes
+selected projects, academic records, and contact links. The design takes
 inspiration from [Andrej Karpathy's site](https://karpathy.ai/).
 
 ## Local development
@@ -29,17 +29,20 @@ and script URLs.
 - `src/data/news.ts`: education and learning milestones. Dates are recorded facts;
   their end dates do not determine completion status.
 - `src/data/projects.ts`: projects in display order, technology lists, actual
-  repository links, and project notes. Each slug gets a same-tab detail route.
+  repository links, and README snapshot metadata. Each slug gets a same-tab detail route.
 - `src/data/academic.ts`: verified publications and awards. Publication records
   include authors, venue, year, explicit publication status, and optional links.
 - `src/data/writing.ts`: articles and notes. Only `status: "published"` appears
-  publicly. The old sample article is retained as `placeholder`, without fake views.
+  on `/posts`; the homepage omits the empty Writing & Notes section. The old sample
+  article is retained as `placeholder`, without fake views.
 - `src/data/personal.ts`: real experiments, notebooks, demos, and personal activities.
   Experiments and Beyond Code stay hidden while their arrays are empty.
 
 The introduction uses the existing portrait at `public/01.jpg`. The existing
 group photograph at `public/02.jpg` is preserved without assigning identities
-or claiming a specific event. No CV, publication, award, or hobby is fabricated.
+or claiming a specific event. The Fashion Outfit Compatibility System thumbnail
+uses the supplied team photo at `public/projects/ai-fashion-assistant/team-presentation.jpg`.
+No CV, publication, award, or hobby is fabricated.
 
 ## Routes
 
@@ -47,7 +50,8 @@ or claiming a specific event. No CV, publication, award, or hobby is fabricated.
 - `/works`, `/posts`, `/news`: retained project, writing, and journey archives.
 - `/projects/autonomous-ml-toolkit`: original README, public local images, and
   separate GitHub link.
-- `/projects/ai-fashion-assistant`: notes based on existing portfolio content.
+- `/projects/ai-fashion-assistant`: Fashion Outfit Compatibility System, with the
+  English translation of its Vietnamese repository README. The existing URL is retained.
 
 Light mode is the default. The color-theme button preserves an explicit choice in
 browser storage; both themes use the same layout. Skip navigation, visible keyboard
@@ -94,3 +98,24 @@ The updater supports inline and reference-style Markdown images tracked in the
 source repository. If a future README uses remote images, it stops with an
 explanation; save those images into the source repository before refreshing.
 After any update, review the diff and the detail page before publishing.
+
+### Fashion project translation
+
+`src/content/projects/ai-fashion-assistant/README.md` is the complete English
+translation of the README from `ThinhTran2208/outfit-compatibility-system` on
+`main`. The unmodified Vietnamese source is retained in `README.vi.md`, and
+`snapshot.json` records its Git blob SHA and the source SHA used for translation.
+The page identifies the translation and links to the original Vietnamese README.
+
+The source README currently has no image assets. Its tables, JSON examples,
+pipeline Mermaid source, and mathematical definitions are retained; formulas
+render with KaTeX. The translation preserves the distinction between the current
+scorer/LOO/VLM delivery and the unimplemented replacement recommendation stage.
+It also preserves the fact that the system itself renders Vietnamese explanations.
+
+To refresh this translation, retrieve the latest README from the recorded source
+branch, save its exact bytes as `README.vi.md`, translate the complete document
+into `README.md`, and update `readmeSha`, `translationSourceSha`, and `capturedAt`
+in its manifest together. Review both documents and run the checks above. The
+`sync:readme` command remains specific to the English autonomous-ml-toolkit snapshot;
+it does not overwrite the fashion translation or modify the upstream repository.

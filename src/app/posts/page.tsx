@@ -8,8 +8,8 @@ export default function PostsPage() {
   return (
     <SiteShell>
       <header className="page-intro">
-        <Link className="back-link" href="/#writing">
-          ← Home / Writing
+        <Link className="back-link" href="/">
+          ← Home
         </Link>
         <h1>Writing &amp; Notes</h1>
         <p className="muted">

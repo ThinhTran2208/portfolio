@@ -1,2 +1,3 @@
 # Preserve original README snapshot bytes across Windows checkouts.
 src/content/projects/**/README.md -text
+src/content/projects/**/README.vi.md -text

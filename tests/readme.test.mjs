@@ -102,3 +102,105 @@ test("Markdown cannot execute raw HTML or script URLs", () => {
     /<script|<img|javascript:|data:text\/html|onerror/i,
   );
 });
+
+import { unified } from "unified";
+import remarkParse from "remark-parse";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
+
+const fashionDir = new URL(
+  "../src/content/projects/ai-fashion-assistant/",
+  import.meta.url,
+);
+const fashionSnapshot = JSON.parse(
+  await readFile(new URL("snapshot.json", fashionDir), "utf8"),
+);
+const vietnamese = await readFile(
+  new URL(fashionSnapshot.sourceFile, fashionDir),
+);
+const english = await readFile(new URL("README.md", fashionDir), "utf8");
+const markdownNodes = (text) => {
+  const nodes = [];
+  const visit = (node) => {
+    nodes.push(node);
+    for (const child of node.children ?? []) visit(child);
+  };
+  visit(unified().use(remarkParse).use(remarkGfm).parse(text));
+  return nodes;
+};
+
+test("Vietnamese README is preserved exactly and translation identifies its source", () => {
+  const hash = createHash("sha1")
+    .update("blob " + vietnamese.length + "\0")
+    .update(vietnamese)
+    .digest("hex");
+  assert.equal(hash, fashionSnapshot.readmeSha);
+  assert.equal(fashionSnapshot.translationSourceSha, hash);
+  assert.equal(fashionSnapshot.sourceLanguage, "vi");
+  assert.equal(fashionSnapshot.language, "en");
+});
+
+test("complete translation preserves section structure, tables, JSON contracts, and pipeline", () => {
+  const original = markdownNodes(vietnamese.toString("utf8"));
+  const translated = markdownNodes(english);
+  assert.deepEqual(
+    translated
+      .filter((node) => node.type === "heading")
+      .map((node) => node.depth),
+    original
+      .filter((node) => node.type === "heading")
+      .map((node) => node.depth),
+  );
+  assert.equal(
+    translated.filter((node) => node.type === "table").length,
+    original.filter((node) => node.type === "table").length,
+  );
+  const jsonBlocks = (nodes) =>
+    nodes
+      .filter((node) => node.type === "code" && node.lang === "json")
+      .map((node) => JSON.parse(node.value));
+  assert.deepEqual(jsonBlocks(translated), jsonBlocks(original));
+  const pipeline = (nodes) =>
+    nodes.find((node) => node.type === "code" && node.lang === "mermaid").value;
+  assert.equal(pipeline(translated), pipeline(original));
+  for (const value of [
+    "114,806",
+    "17,316",
+    "363",
+    "ROC-AUC",
+    "Recall@200",
+    "Recall@5",
+    "LOO Top-1 Localization Accuracy",
+    "Qwen/Qwen3-VL-4B-Instruct",
+  ]) {
+    assert.ok(english.includes(value), "Translation retains " + value);
+  }
+  assert.match(english, /have not been implemented and remain future work/);
+  assert.match(english, /renders Vietnamese text using reviewed templates/);
+});
+
+test("fashion snapshot uses its own repository and renders formulas without trusting HTML", () => {
+  const fashionTransform = createReadmeUrlTransform(fashionSnapshot);
+  assert.equal(
+    fashionTransform("docs/VLM_EXPLANATION_V1.md", "href"),
+    "https://github.com/ThinhTran2208/outfit-compatibility-system/blob/main/docs/VLM_EXPLANATION_V1.md",
+  );
+  assert.equal(fashionTransform("#overview", "href"), "#overview");
+  const html = renderToStaticMarkup(
+    React.createElement(
+      Markdown,
+      {
+        remarkPlugins: [remarkGfm, remarkMath],
+        rehypePlugins: [rehypeSlug, [rehypeKatex, { trust: false }]],
+        skipHtml: true,
+        urlTransform: fashionTransform,
+      },
+      english,
+    ),
+  );
+  assert.match(html, /class="katex"/);
+  assert.match(html, /id="overview"/);
+  assert.match(html, /id="disclaimer"/);
+  assert.match(html, /not_implemented/);
+  assert.doesNotMatch(html, /katex-error|<script/i);
+});

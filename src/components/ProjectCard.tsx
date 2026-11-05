@@ -15,8 +15,8 @@ export default function ProjectCard({ project }: { project: Project }) {
           <Image
             src={project.image.src}
             alt=""
-            width={300}
-            height={180}
+            width={project.image.width ?? 300}
+            height={project.image.height ?? 180}
             sizes="(max-width: 600px) 160px, 148px"
           />
         </Link>

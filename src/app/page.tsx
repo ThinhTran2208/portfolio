@@ -7,7 +7,6 @@ import {
   ActivityImage,
   ContactLinks,
   JourneyList,
-  WritingList,
 } from "@/components/ContentLists";
 import { projects } from "@/data/projects";
 import { profile } from "@/data/profile";
@@ -80,19 +79,6 @@ export default function Home() {
       >
         <h2 id="academic-heading">Academic Achievements</h2>
         <AcademicList />
-      </section>
-      <section
-        className="content-section"
-        id="writing"
-        aria-labelledby="writing-heading"
-      >
-        <div className="section-heading">
-          <h2 id="writing-heading">Writing &amp; Notes</h2>
-          <Link href="/posts">
-            All writing <span aria-hidden="true">→</span>
-          </Link>
-        </div>
-        <WritingList />
       </section>
       {experiments.length > 0 && (
         <section

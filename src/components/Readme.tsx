@@ -1,15 +1,24 @@
 import Markdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { createReadmeUrlTransform } from "@/lib/readme.mjs";
-import snapshot from "@/content/projects/autonomous-ml-toolkit/snapshot.json";
+import type { ReadmeSnapshot } from "@/types/readme";
+import "katex/dist/katex.min.css";
 
-export default function Readme({ content }: { content: string }) {
+export default function Readme({
+  content,
+  snapshot,
+}: {
+  content: string;
+  snapshot: ReadmeSnapshot;
+}) {
   return (
     <div className="readme">
       <Markdown
-        remarkPlugins={[remarkGfm]}
-        rehypePlugins={[rehypeSlug]}
+        remarkPlugins={[remarkGfm, remarkMath]}
+        rehypePlugins={[rehypeSlug, [rehypeKatex, { trust: false }]]}
         skipHtml
         urlTransform={createReadmeUrlTransform(snapshot)}
         components={{

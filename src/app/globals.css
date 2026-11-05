@@ -366,12 +366,6 @@ main {
   color: var(--muted);
   margin-top: 8px;
 }
-.project-notes {
-  padding: 26px 0;
-}
-.project-notes p {
-  font-size: 15px;
-}
 .readme-meta {
   display: flex;
   justify-content: space-between;
@@ -447,6 +441,15 @@ main {
   padding: 0;
   white-space: pre;
   overflow-wrap: normal;
+}
+.readme .katex-display {
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 5px 0;
+}
+.readme .katex {
+  font-size: 1.05em;
 }
 .readme img {
   display: block;
