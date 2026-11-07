@@ -40,7 +40,7 @@ and script URLs.
 - `src/data/personal.ts`: real experiments, notebooks, demos, and personal activities.
   Experiments and Beyond Code stay hidden while their arrays are empty.
 
-The introduction uses the existing portrait at `public/01.jpg`. The existing
+The introduction uses the supplied portrait at `public/profile.jpg`. The existing
 group photograph at `public/02.jpg` is preserved without assigning identities
 or claiming a specific event. The Fashion Outfit Compatibility System thumbnail
 uses the supplied team photo at `public/projects/ai-fashion-assistant/team-presentation.jpg`.
