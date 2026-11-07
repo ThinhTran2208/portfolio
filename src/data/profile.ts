@@ -4,7 +4,7 @@ export const profile = {
   description:
     "I'm a Computer Science student at HCMUT, interested in AI, Machine Learning, and Computer Vision 👾🌾🔥️🏀.",
   email: "thinh.tran2208@hcmut.edu.vn",
-  portrait: "/profile.jpg",
+  portrait: "/profile-closeup.jpg",
   links: [
     { label: "Email", href: "mailto:thinh.tran2208@hcmut.edu.vn" },
     { label: "GitHub", href: "https://github.com/ThinhTran2208" },
