@@ -2,7 +2,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { journeyEntries } from "@/data/news";
 import { publishedWriting } from "@/data/writing";
-import { publications, awards } from "@/data/academic";
+import { publications, awards, certificates } from "@/data/academic";
+import AcademicImagePreview from "./AcademicImagePreview";
 import { profile } from "@/data/profile";
 
 export function ContactLinks() {
@@ -93,19 +94,68 @@ export function AcademicList() {
         {awards.length ? (
           <ul className="plain-list">
             {awards.map((item) => (
-              <li key={item.title + item.year}>
-                <h4>
-                  {item.url ? <a href={item.url}>{item.title}</a> : item.title}
-                </h4>
-                <p className="muted">
-                  {item.organization} · {item.year}
-                </p>
-                <p>{item.description}</p>
+              <li key={item.title + (item.year ?? "")}>
+                {item.image ? (
+                  <AcademicImagePreview
+                    title={item.title}
+                    metadata={
+                      item.organization + (item.year ? " · " + item.year : "")
+                    }
+                    description={item.description}
+                    image={item.image}
+                  />
+                ) : (
+                  <>
+                    <h4>
+                      {item.url ? (
+                        <a href={item.url}>{item.title}</a>
+                      ) : (
+                        item.title
+                      )}
+                    </h4>
+                    <p className="muted">
+                      {item.organization}
+                      {item.year ? " · " + item.year : ""}
+                    </p>
+                    <p>{item.description}</p>
+                  </>
+                )}
               </li>
             ))}
           </ul>
         ) : (
           <p className="empty-state">No awards or honors to list yet.</p>
+        )}
+      </div>
+      <div>
+        <h3>Certificates</h3>
+        {certificates.length ? (
+          <ul className="plain-list">
+            {certificates.map((item) => (
+              <li key={item.title + item.issuedOn}>
+                <AcademicImagePreview
+                  title={item.title}
+                  metadata={
+                    item.issuer +
+                    " · " +
+                    new Date(item.issuedOn + "T00:00:00Z").toLocaleDateString(
+                      "en-US",
+                      {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                        timeZone: "UTC",
+                      },
+                    )
+                  }
+                  description={item.caption}
+                  image={item.image}
+                />
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="empty-state">No certificates to list yet.</p>
         )}
       </div>
     </div>

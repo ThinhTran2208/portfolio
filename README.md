@@ -30,8 +30,10 @@ and script URLs.
   their end dates do not determine completion status.
 - `src/data/projects.ts`: projects in display order, technology lists, actual
   repository links, and README snapshot metadata. Each slug gets a same-tab detail route.
-- `src/data/academic.ts`: verified publications and awards. Publication records
-  include authors, venue, year, explicit publication status, and optional links.
+- `src/data/academic.ts`: verified publications, awards, and certificates. Publication
+  records include authors, venue, year, explicit publication status, and optional links.
+  Award years are optional when unspecified. Certificate records include issuer,
+  completion date, a personal caption, and the original certificate image.
 - `src/data/writing.ts`: articles and notes. Only `status: "published"` appears
   on `/posts`; the homepage omits the empty Writing & Notes section. The old sample
   article is retained as `placeholder`, without fake views.
@@ -56,6 +58,9 @@ No CV, publication, award, or hobby is fabricated.
 Light mode is the default. The color-theme button preserves an explicit choice in
 browser storage; both themes use the same layout. Skip navigation, visible keyboard
 focus, and keyboard-scrollable code/table regions support keyboard use.
+Academic award and certificate thumbnails open an image preview on the same page.
+The preview supports Escape, a close button, backdrop dismissal, and native dialog
+focus handling. The Kaggle Python certificate is stored in `public/academic/`.
 
 ## README snapshot
 
