@@ -55,7 +55,7 @@ export const certificates: Certificate[] = [
     issuer: "Kaggle",
     issuedOn: "2026-11-07",
     caption:
-      "i used c++ in the past, but now i learn python to prepare for the ML project :) I quite like its simplicity haha",
+      "I used to work with C++, but now I’m learning Python to prepare for a machine learning (ML) project :) I’m really enjoying how simple it is, haha.",
     image: {
       src: "/academic/kaggle-python-certificate.png",
       alt: "Kaggle Python course completion certificate for Trần Tấn Thịnh, dated November 7, 2026",
